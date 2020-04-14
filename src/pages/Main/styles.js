@@ -10,7 +10,7 @@ export const Product = styled.View`
   width: 220px;
 `;
 
-export const ProductImage = styled.View`
+export const ProductImage = styled.Image`
   height: 200px;
   width: 200px;
 `;
@@ -22,7 +22,7 @@ export const ProductTitle = styled.Text`
   margin-top: 5px;
 `;
 
-export const ProductPrice = styled.View`
+export const ProductPrice = styled.Text`
   font-size: 21px;
   font-weight: bold;
   margin: 5px 0 20px;
@@ -48,7 +48,7 @@ export const ProductAmountText = styled.Text`
   margin: 0px 4px 0px 10px;
 `;
 
-export const ButtonText = styled.View`
+export const ButtonText = styled.Text`
   color: #fff;
   flex: 1;
   font-weight: bold;
