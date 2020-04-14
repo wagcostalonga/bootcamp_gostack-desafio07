@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Navbar, Logo, ItemCount } from './styles';
 
-function Header({ cartSize }) {
+export default function Header() {
   const navigation = useNavigation();
   function navigateToCart() {
     navigation.navigate('Cart');
@@ -16,6 +16,7 @@ function Header({ cartSize }) {
     navigation.navigate('Main');
   }
 
+  const cartSize = useSelector((state) => state.cart.length);
   return (
     <Navbar>
       <TouchableOpacity onPress={navigateToMain}>
@@ -28,7 +29,3 @@ function Header({ cartSize }) {
     </Navbar>
   );
 }
-
-export default connect((state) => ({
-  cartSize: state.cart.length,
-}))(Header);
