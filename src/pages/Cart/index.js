@@ -1,6 +1,6 @@
 import React from 'react';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { formatPrice } from '../../util/format';
@@ -52,67 +52,75 @@ export default function Cart() {
   }
 
   return (
-    <Container>
-      {cart.length ? (
-        <>
-          {cart.map((product) => (
-            <Product key={product.id}>
-              <ProductItem>
-                <ProductImage source={{ uri: product.image }} />
-                <ProductDetails>
-                  <ProductTitle>{product.title}</ProductTitle>
-                  <ProductPrice>{product.priceFormatted}</ProductPrice>
-                </ProductDetails>
-                <TouchableOpacity
-                  onPress={() =>
-                    dispatch(CartActions.removeFromCart(product.id))
-                  }
-                >
-                  <Icon name="delete" color="#7159c1" size={20} />
-                </TouchableOpacity>
-              </ProductItem>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Container>
+        {cart.length ? (
+          <>
+            {cart.map((product) => (
+              <Product key={product.id}>
+                <ProductItem>
+                  <ProductImage source={{ uri: product.image }} />
+                  <ProductDetails>
+                    <ProductTitle>{product.title}</ProductTitle>
+                    <ProductPrice>{product.priceFormatted}</ProductPrice>
+                  </ProductDetails>
+                  <TouchableOpacity
+                    onPress={() =>
+                      dispatch(CartActions.removeFromCart(product.id))
+                    }
+                  >
+                    <Icon name="delete" color="#7159c1" size={20} />
+                  </TouchableOpacity>
+                </ProductItem>
 
-              <ProductSubTotal>
-                <ProductAmount>
-                  <TouchableOpacity onPress={() => decrement(product)}>
-                    <Icon
-                      name="remove-circle-outline"
-                      color="#7159c1"
-                      size={20}
+                <ProductSubTotal>
+                  <ProductAmount>
+                    <TouchableOpacity onPress={() => decrement(product)}>
+                      <Icon
+                        name="remove-circle-outline"
+                        color="#7159c1"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                    <ProductInput
+                      keyboardType="numeric"
+                      editable={false}
+                      value={String(product.amount)}
                     />
-                  </TouchableOpacity>
-                  <ProductInput
-                    keyboardType="numeric"
-                    editable={false}
-                    value={String(product.amount)}
-                  />
-                  <TouchableOpacity onPress={() => increment(product)}>
-                    <Icon name="add-circle-outline" color="#7159c1" size={20} />
-                  </TouchableOpacity>
-                </ProductAmount>
-                <ProductSubTotalPrice>{product.subtotal}</ProductSubTotalPrice>
-              </ProductSubTotal>
-            </Product>
-          ))}
-          <ProductTotal>
-            <ProductTotalText>Total</ProductTotalText>
-            <ProductTotalPrice>{total}</ProductTotalPrice>
-            <ProductTotalButton>
-              <ButtonText>Finalizar Pedido</ButtonText>
-            </ProductTotalButton>
-          </ProductTotal>
-        </>
-      ) : (
-        <>
-          <Icon
-            name="remove-shopping-cart"
-            size={80}
-            color="#e5e5e5"
-            style={{ textAlign: 'center' }}
-          />
-          <EmptyCart>Seu carrinho está vazio!</EmptyCart>
-        </>
-      )}
-    </Container>
+                    <TouchableOpacity onPress={() => increment(product)}>
+                      <Icon
+                        name="add-circle-outline"
+                        color="#7159c1"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </ProductAmount>
+                  <ProductSubTotalPrice>
+                    {product.subtotal}
+                  </ProductSubTotalPrice>
+                </ProductSubTotal>
+              </Product>
+            ))}
+            <ProductTotal>
+              <ProductTotalText>Total</ProductTotalText>
+              <ProductTotalPrice>{total}</ProductTotalPrice>
+              <ProductTotalButton>
+                <ButtonText>Finalizar Pedido</ButtonText>
+              </ProductTotalButton>
+            </ProductTotal>
+          </>
+        ) : (
+          <>
+            <Icon
+              name="remove-shopping-cart"
+              size={80}
+              color="#e5e5e5"
+              style={{ textAlign: 'center' }}
+            />
+            <EmptyCart>Seu carrinho está vazio!</EmptyCart>
+          </>
+        )}
+      </Container>
+    </ScrollView>
   );
 }
